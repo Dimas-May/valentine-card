@@ -11,15 +11,21 @@
     />
 
     <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
         font-family: "Poppins", sans-serif;
         background: linear-gradient(#f8d7da, #f6e4e6);
         color: #7a1e2b;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
       }
+
       .section {
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -28,16 +34,20 @@
         padding: 20px;
         transition: 0.6s;
       }
+
       .hidden {
         display: none;
       }
+
       h1,
       h2 {
         font-family: "Playfair Display", serif;
       }
+
       .script {
         font-family: "Great Vibes", cursive;
       }
+
       .button {
         margin-top: 20px;
         padding: 12px 25px;
@@ -48,16 +58,20 @@
         cursor: pointer;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
       }
+
       .memories img {
         width: 260px;
+        max-width: 90%;
         border-radius: 15px;
         margin: 10px 0;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       }
+
       iframe {
         border-radius: 12px;
         margin-top: 15px;
       }
+
       .envelope {
         width: 260px;
         height: 160px;
@@ -67,6 +81,7 @@
         cursor: pointer;
         margin-top: 20px;
       }
+
       .flap {
         position: absolute;
         width: 100%;
@@ -74,10 +89,13 @@
         background: #e8b5bf;
         clip-path: polygon(0 0, 100% 0, 50% 60%);
         transition: 0.8s;
+        transform-origin: top;
       }
+
       .open .flap {
         transform: rotateX(180deg);
       }
+
       .letter {
         max-width: 320px;
         background: #ffffff;
@@ -86,13 +104,16 @@
         text-align: left;
         line-height: 1.6;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
       }
+
       .petals {
         position: fixed;
         width: 100%;
         height: 100%;
         pointer-events: none;
       }
+
       .petal {
         position: absolute;
         width: 8px;
@@ -101,6 +122,7 @@
         border-radius: 50%;
         animation: fall linear infinite;
       }
+
       @keyframes fall {
         to {
           transform: translateY(100vh);
@@ -108,6 +130,7 @@
       }
     </style>
   </head>
+
   <body>
     <div class="petals"></div>
 
@@ -122,8 +145,9 @@
     <div class="section hidden" id="memories">
       <h2>Our Memories</h2>
 
-      <!-- GANTI FOTO DI SINI -->
       <div class="memories">
+        <img src="P4.jpeg" />
+        <img src="P3.jpeg" />
         <img src="P5.jpeg" />
         <img src="P6.jpeg" />
       </div>
@@ -131,12 +155,11 @@
       <button class="button" onclick="next('song')">Next</button>
     </div>
 
-    <!-- 3. SONG (SPOTIFY EMBED — TIDAK REDIRECT) -->
+    <!-- 3. SONG -->
     <div class="section hidden" id="song">
       <h2>Song for You 🎶</h2>
       <p>This song reminds me of you</p>
 
-      <!-- GANTI LINK SPOTIFY EMBED DI SINI -->
       <iframe
         src="https://open.spotify.com/embed/track/0tgVpDi06FyKpA1z0VMD4v"
         width="320"
@@ -155,7 +178,7 @@
       <button class="button" onclick="next('letter')">Next</button>
     </div>
 
-    <!-- 4. LETTER TERAKHIR -->
+    <!-- 4. LETTER -->
     <div class="section hidden" id="letter">
       <h2>A Letter For You</h2>
 
@@ -166,18 +189,19 @@
       <div id="letterContent" class="hidden">
         <div class="letter">
           <h3>Dear,</h3>
-
-          <!-- EDIT SURAT DI SINI -->
           <p>
             1 Yohanes 4:19: "Kita mengasihi, karena Allah lebih dahulu mengasihi
-            kita." Terima kasih telah menjadi bagian terindah dalam hidup aku.
+            kita." 
+            <br>Terima kasih telah menjadi bagian terindah dalam hidup aku.
             Setiap momen bersama kamu adalah anugerah yang tak ternilai. Aku
             bersyukur atas cinta dan kebahagiaan yang kamu bawa ke dalam
             hidupku. Semoga hari Valentine ini menjadi awal dari banyak kenangan
             indah yang akan kita ciptakan bersama. Maaf kalau aku nggak bisa
             kasih apa-apa selain surat ini, tapi aku harap kamu tahu betapa
             berharganya kamu buat aku. Aku cinta kamu selalu. Merry Valentine!
-            Semoga hari kamu seindah senyuman kamu.
+            Semoga hari kamu seindah senyuman kamu. Semoga aku selalu bisa
+            membuat kamu bahagia. 
+          </br>
           </p>
 
           <p class="script" style="text-align: right; color: #e63950">
@@ -192,13 +216,26 @@
         document
           .querySelectorAll(".section")
           .forEach((sec) => sec.classList.add("hidden"));
-        document.getElementById(id).classList.remove("hidden");
+
+        const target = document.getElementById(id);
+        target.classList.remove("hidden");
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       }
 
       function openEnvelope(el) {
         el.classList.add("open");
+
         setTimeout(() => {
-          document.getElementById("letterContent").classList.remove("hidden");
+          const letter = document.getElementById("letterContent");
+          letter.classList.remove("hidden");
+
+          letter.scrollIntoView({
+            behavior: "smooth",
+          });
         }, 800);
       }
 
